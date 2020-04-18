@@ -1,13 +1,11 @@
 import Foundationo
-
 struct Deque<T>: CustomStringConvertible {
     private var array: [T] = []
     public var count: Int { array.count }
     
     public mutating func popFront() -> T? {
-        guard let first = array.first else { return nil }
-        array.removeFirst()
-        return first
+        guard let _ = array.first else { return nil }
+        return array.removeFirst()
     }
     
     public mutating func popBack() -> T? {
