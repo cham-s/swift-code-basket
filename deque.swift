@@ -15,9 +15,7 @@ struct Deque<T>: CustomStringConvertible {
     }
     
     public mutating func pushFront(_ newElement: T) {
-        var reversed = Array(array.reversed())
-        reversed.append(newElement)
-        array = Array(reversed.reversed())
+        array.insert(newElement, at: 0)
     }
     
     public mutating func pushBack(_ newElement: T) {
