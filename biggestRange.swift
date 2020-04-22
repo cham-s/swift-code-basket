@@ -1,11 +1,4 @@
 import Foundation
-
-extension Int {
-    var isNegative: Bool {
-        get { self < 0 }
-    }
-}
-
 extension Array where Self.Element == Int {
     var biggestRange: ClosedRange<Int> {
         get {
@@ -13,24 +6,28 @@ extension Array where Self.Element == Int {
             var globalEnd = 0
             var globalTotal = 0
             var index = 0
-
-            while index < self.indices.count {
-                let element = self[index]
-                if !element.isNegative {
-                    var localStart = index
-                    var localEnd = 0
-                    var localTotal = 0
-
-                    while !element.isNegative && index < self.indices.count  {
-                        localTotal += element
-                        index += 1
-                    }
-                    if localTotal > globalTotal {
-                        globalStart =
+            
+            mainLoop: while index < self.indices.count {
+                let localStart = index
+                var localTotal = 0
+                
+                while !self[index].isNegative {
+                    print(self[index])
+                    localTotal += self[index]
+                    index += 1
+                    if index == self.indices.count {
+                        break mainLoop
                     }
                 }
+                if localTotal > globalTotal {
+                    globalStart = localStart
+                    globalEnd = index - 1
+                    globalTotal = localTotal
+                    localTotal = 0
+                }
+                index += 1
             }
-
+            return globalStart...globalEnd
         }
     }
 }
