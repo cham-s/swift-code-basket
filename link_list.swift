@@ -14,7 +14,13 @@ class LinkListNode<Element: CustomStringConvertible> {
     }
 }
 
-class List<T: CustomStringConvertible> {
+class List<T: CustomStringConvertible>: CustomStringConvertible {
+    var description: String {
+        var strArray = arrayForm.map { $0.description }
+        strArray.append("NULL")
+        return strArray.joined(separator: " -> ")
+    }
+    
     var head: LinkListNode<T>?
     private var tmp: LinkListNode<T>?
     
@@ -42,6 +48,10 @@ class List<T: CustomStringConvertible> {
         }
     }
     
+    func reversed() -> List {
+        return List(array: Array(arrayForm.reversed()))
+    }
+    
     lazy var arrayForm: [T] = {
         var array: [T] = []
         
@@ -60,15 +70,14 @@ class List<T: CustomStringConvertible> {
         }
         print("")
     }
-    
-    
 }
 
 let alphabet = "abcdefghijklmnopqrstuvwxyz"
 let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-var list = List(array: alphabet)
+let listAlpha = List(array: alphabet)
+let listNumbers = List(array: numbers)
 
-if let middle = list.middle {
-    print(middle.element)
-}
-
+print("default order alphabet: \(listAlpha.description)")
+print("reversed order: \(listAlpha.reversed().description)")
+print("default order numbers: \(listNumbers.description)")
+print("reversed order: \(listNumbers.reversed().description)")
